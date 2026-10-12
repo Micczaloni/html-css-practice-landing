@@ -218,3 +218,67 @@ ul {
   color: var(--muted);
   font-size: 0.95rem;
 }
+/* Schedule — Flexbox rows */
+.schedule {
+  padding: 1rem 0 3.5rem;
+}
+
+.days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.25rem;
+}
+
+.days__tab {
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.4rem 0.9rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  cursor: default;
+}
+
+.days__tab--active {
+  background: var(--accent);
+}
+
+.days__tab:disabled {
+  opacity: 0.55;
+}
+
+.timetable__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.timetable__row:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.timetable__row time {
+  font-weight: 600;
+  min-width: 3.25rem;
+}
+
+.timetable__name {
+  font-weight: 700;
+  min-width: 4.5rem;
+}
+
+.timetable__coach,
+.timetable__level {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.timetable__row .btn {
+  margin-left: auto;
+}

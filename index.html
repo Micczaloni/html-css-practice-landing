@@ -56,7 +56,39 @@
 
     <section id="classes" class="schedule wrap" aria-labelledby="schedule-title">
       <h2 id="schedule-title">Class schedule</h2>
-      <!-- schedule content next -->
+
+      <div class="days" role="tablist" aria-label="Week days">
+        <button type="button" class="days__tab days__tab--active" aria-selected="true">Mon</button>
+        <button type="button" class="days__tab" aria-selected="false" disabled>Tue</button>
+        <button type="button" class="days__tab" aria-selected="false" disabled>Wed</button>
+        <button type="button" class="days__tab" aria-selected="false" disabled>Thu</button>
+        <button type="button" class="days__tab" aria-selected="false" disabled>Fri</button>
+        <button type="button" class="days__tab" aria-selected="false" disabled>Sat</button>
+      </div>
+
+      <ul class="timetable">
+        <li class="timetable__row">
+          <time datetime="07:00">07:00</time>
+          <span class="timetable__name">HIIT</span>
+          <span class="timetable__coach">Marta R.</span>
+          <span class="timetable__level">Intermediate</span>
+          <a class="btn btn--small" href="#contact">Book</a>
+        </li>
+        <li class="timetable__row">
+          <time datetime="12:30">12:30</time>
+          <span class="timetable__name">Yoga</span>
+          <span class="timetable__coach">Sofia L.</span>
+          <span class="timetable__level">All levels</span>
+          <a class="btn btn--small" href="#contact">Book</a>
+        </li>
+        <li class="timetable__row">
+          <time datetime="18:30">18:30</time>
+          <span class="timetable__name">Strength</span>
+          <span class="timetable__coach">Alex K.</span>
+          <span class="timetable__level">Intermediate</span>
+          <a class="btn btn--small" href="#contact">Book</a>
+        </li>
+      </ul>
     </section>
 
     <section id="trainers" class="team wrap" aria-labelledby="team-title">
