@@ -1,4 +1,4 @@
-﻿*,
+*,
 *::before,
 *::after {
   box-sizing: border-box;
@@ -134,7 +134,7 @@ ul {
   background: var(--text);
   color: var(--surface);
 }
-/* Header — Flexbox */
+/* Header - Flexbox */
 .topbar {
   position: sticky;
   top: 0;
@@ -177,7 +177,7 @@ ul {
   color: var(--muted);
 }
 
-/* Hero — Flexbox for CTAs */
+/* Hero - Flexbox for CTAs */
 .hero {
   padding: 4.5rem 0 3.5rem;
   text-align: center;
@@ -196,7 +196,7 @@ ul {
   gap: 0.75rem;
 }
 
-/* Commitments — CSS Grid */
+/* Commitments - CSS Grid */
 .commitments {
   padding: 1rem 0 3.5rem;
 }
@@ -218,7 +218,7 @@ ul {
   color: var(--muted);
   font-size: 0.95rem;
 }
-/* Schedule — Flexbox rows */
+/* Schedule - Flexbox rows */
 .schedule {
   padding: 1rem 0 3.5rem;
 }
@@ -282,7 +282,7 @@ ul {
 .timetable__row .btn {
   margin-left: auto;
 }
-/* Team — CSS Grid */
+/* Team - CSS Grid */
 .team {
   padding: 1rem 0 3.5rem;
 }
@@ -315,7 +315,7 @@ ul {
   font-size: 0.92rem;
 }
 
-/* Memberships — Flexbox cards */
+/* Memberships - Flexbox cards */
 .plans {
   padding: 1rem 0 3.5rem;
 }
@@ -383,7 +383,7 @@ ul {
 }
 
 .plan__list li::before {
-  content: "✓";
+  content: "\2713";
   position: absolute;
   left: 0;
   color: var(--text);
@@ -439,7 +439,7 @@ ul {
   min-height: 7rem;
 }
 
-/* Footer — Grid */
+/* Footer - Grid */
 .site-footer {
   background: var(--footer-bg);
   padding: 2.5rem 0 1.5rem;

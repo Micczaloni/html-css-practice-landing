@@ -1,8 +1,8 @@
-﻿# html-css-practice-landing
+# html-css-practice-landing
 
 Course exercise: a single-page fitness studio site built with plain **HTML5** and **CSS3** (no frameworks).
 
-This is a small school assignment focused on semantic HTML, Flexbox, and Grid — not a production product.
+This is a small school assignment focused on semantic HTML, Flexbox, and Grid - not a production product.
 
 ## Layout notes
 
@@ -11,7 +11,7 @@ This is a small school assignment focused on semantic HTML, Flexbox, and Grid �
 | Header / hero CTAs | Flexbox |
 | Commitments / trainers / footer | CSS Grid |
 | Membership cards | Flexbox |
-| Schedule rows | Flexbox → Grid from tablet up |
+| Schedule rows | Flexbox to Grid from tablet up |
 
 ## Checklist
 
