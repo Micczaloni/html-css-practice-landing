@@ -162,12 +162,43 @@
 
     <section id="contact" class="contact wrap" aria-labelledby="contact-title">
       <h2 id="contact-title">Come meet us</h2>
-      <!-- form next -->
+      <form class="contact__form" action="#" method="get">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button class="btn btn--accent" type="submit">Send</button>
+      </form>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p class="footer__copy">Â© 2026 PULSO Studio. All rights reserved.</p>
+    <div class="wrap footer__grid">
+      <div>
+        <p class="footer__title">PULSO Studio</p>
+        <p>12 Rue du Sport<br>75011 Paris</p>
+      </div>
+      <div>
+        <p class="footer__title">Opening hours</p>
+        <p>Mon–Fri 6:30–21:00<br>Sat–Sun 9:00–14:00</p>
+      </div>
+      <div>
+        <p class="footer__title">Follow us</p>
+        <p>
+          <a href="https://instagram.com" rel="noopener noreferrer">Instagram</a><br>
+          <a href="https://tiktok.com" rel="noopener noreferrer">TikTok</a>
+        </p>
+      </div>
+    </div>
+    <p class="footer__copy">© 2026 PULSO Studio. All rights reserved.</p>
   </footer>
 
 </body>
