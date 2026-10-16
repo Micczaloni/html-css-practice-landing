@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { DAYS, classes } from "../data/classes";
 import { trainers } from "../data/trainers";
+import { memberships } from "../data/memberships";
 
 const MainContent = () => {
   const [selectedDay, setSelectedDay] = useState("Mon");
@@ -122,6 +123,114 @@ const MainContent = () => {
             </article>
           ))}
         </div>
+      </section>
+
+      <section id="prices" className="py-8" aria-labelledby="plans-title">
+        <h2 id="plans-title" className="mb-5 text-2xl font-bold">
+          Memberships
+        </h2>
+        <div className="flex flex-col gap-4 md:flex-row md:items-stretch">
+          {memberships.map((plan) => (
+            <article
+              key={plan.id}
+              className={`relative flex flex-1 flex-col gap-2.5 rounded-[10px] bg-white p-6 pt-7 ${
+                plan.popular
+                  ? "border-2 border-[#c6d947]"
+                  : "border-[1.5px] border-gray-300"
+              }`}
+            >
+              {plan.popular && (
+                <p className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#c6d947] px-2.5 py-0.5 text-xs font-bold whitespace-nowrap">
+                  Most popular
+                </p>
+              )}
+              <h3 className="text-lg font-bold">{plan.name}</h3>
+              <p className="text-[1.65rem] font-bold tracking-tight">
+                {plan.price}&euro;
+                <span className="text-[0.95rem] font-medium text-gray-600">
+                  /month
+                </span>
+              </p>
+              <ul className="mb-4 flex-1 space-y-2">
+                {plan.features.map((feature) => (
+                  <li
+                    key={feature}
+                    className="relative pl-5 text-[0.95rem] text-gray-600 before:absolute before:left-0 before:font-bold before:text-black before:content-['✓']"
+                  >
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="#contact"
+                className={`mt-auto block rounded-full px-4 py-2.5 text-center text-sm font-semibold ${
+                  plan.popular
+                    ? "bg-[#c6d947] text-black hover:bg-[#b5c73a]"
+                    : "border border-black bg-white text-black"
+                }`}
+              >
+                Choose {plan.name}
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="contact" className="py-8 pb-16" aria-labelledby="contact-title">
+        <h2 id="contact-title" className="mb-5 text-2xl font-bold">
+          Come meet us
+        </h2>
+        <form
+          className="flex max-w-md flex-col gap-4"
+          action="#"
+          method="get"
+          onSubmit={(event) => event.preventDefault()}
+        >
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="name" className="text-sm font-semibold">
+              Name
+            </label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autoComplete="name"
+              required
+              className="w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 focus:outline-2 focus:outline-[#c6d947] focus:outline-offset-1"
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="email" className="text-sm font-semibold">
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              className="w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 focus:outline-2 focus:outline-[#c6d947] focus:outline-offset-1"
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="message" className="text-sm font-semibold">
+              Message
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows={5}
+              required
+              className="min-h-28 w-full resize-y rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 focus:outline-2 focus:outline-[#c6d947] focus:outline-offset-1"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-fit rounded-full bg-[#c6d947] px-5 py-2.5 text-sm font-semibold text-black hover:bg-[#b5c73a]"
+          >
+            Send
+          </button>
+        </form>
       </section>
     </div>
   );
