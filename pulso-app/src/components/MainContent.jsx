@@ -11,13 +11,13 @@ const MainContent = () => {
   );
 
   return (
-    <div className="mx-auto w-full max-w-[920px] px-4">
-      <section className="py-10 sm:py-12">
-        <h2 className="mb-5 text-[clamp(1.45rem,3vw,1.85rem)] font-bold">
+    <div className="mx-auto w-full min-w-0 max-w-[920px] px-4">
+      <section className="py-8 sm:py-10 md:py-12">
+        <h2 className="mb-5 text-[clamp(1.35rem,4vw,1.85rem)] font-bold">
           A studio, three commitments
         </h2>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <article className="rounded-[10px] border border-[#d8d8d8] bg-white p-5">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <article className="min-w-0 rounded-[10px] border border-[#d8d8d8] bg-white p-4 sm:p-5">
             <h3 className="mb-1.5 text-[1.05rem] font-bold">
               Personalised training
             </h3>
@@ -25,13 +25,13 @@ const MainContent = () => {
               Plans adapted to your level and goals.
             </p>
           </article>
-          <article className="rounded-[10px] border border-[#d8d8d8] bg-white p-5">
+          <article className="min-w-0 rounded-[10px] border border-[#d8d8d8] bg-white p-4 sm:p-5">
             <h3 className="mb-1.5 text-[1.05rem] font-bold">Real community</h3>
             <p className="text-[0.95rem] text-gray-600">
               A welcoming space where progress is shared.
             </p>
           </article>
-          <article className="rounded-[10px] border border-[#d8d8d8] bg-white p-5">
+          <article className="min-w-0 rounded-[10px] border border-[#d8d8d8] bg-white p-4 sm:p-5 sm:col-span-2 lg:col-span-1">
             <h3 className="mb-1.5 text-[1.05rem] font-bold">
               Flexible schedule
             </h3>
@@ -42,16 +42,20 @@ const MainContent = () => {
         </div>
       </section>
 
-      <section id="classes" className="py-10 sm:py-12" aria-labelledby="schedule-title">
+      <section
+        id="classes"
+        className="py-8 sm:py-10 md:py-12"
+        aria-labelledby="schedule-title"
+      >
         <h2
           id="schedule-title"
-          className="mb-5 text-[clamp(1.45rem,3vw,1.85rem)] font-bold"
+          className="mb-5 text-[clamp(1.35rem,4vw,1.85rem)] font-bold"
         >
           Class schedule
         </h2>
 
         <div
-          className="mb-5 flex flex-wrap gap-2"
+          className="mb-5 flex flex-wrap gap-1.5 sm:gap-2"
           role="tablist"
           aria-label="Week days"
         >
@@ -65,7 +69,7 @@ const MainContent = () => {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setSelectedDay(day)}
-                className={`rounded-full px-3.5 py-1.5 text-sm font-semibold transition ${
+                className={`rounded-full px-3 py-1.5 text-sm font-semibold transition sm:px-3.5 ${
                   isActive
                     ? "bg-[#c6d947] text-black"
                     : "bg-transparent text-gray-500 hover:text-black"
@@ -77,30 +81,34 @@ const MainContent = () => {
           })}
         </div>
 
-        <ul>
+        <ul className="min-w-0">
           {visibleClasses.map((classItem, index) => (
             <li
               key={classItem.id}
-              className={`flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-[#d8d8d8] py-4 ${
+              className={`flex min-w-0 flex-col gap-3 border-b border-[#d8d8d8] py-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2 ${
                 index === 0 ? "border-t" : ""
               }`}
             >
-              <time
-                dateTime={classItem.time}
-                className="min-w-14 font-semibold"
-              >
-                {classItem.time}
-              </time>
-              <span className="min-w-20 font-bold">{classItem.name}</span>
-              <span className="text-[0.95rem] text-gray-600">
-                {classItem.coach}
-              </span>
-              <span className="text-[0.95rem] text-gray-600">
-                {classItem.level}
-              </span>
+              <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 sm:gap-x-4">
+                <time
+                  dateTime={classItem.time}
+                  className="min-w-14 font-semibold"
+                >
+                  {classItem.time}
+                </time>
+                <span className="min-w-16 font-bold sm:min-w-20">
+                  {classItem.name}
+                </span>
+                <span className="text-[0.95rem] text-gray-600">
+                  {classItem.coach}
+                </span>
+                <span className="text-[0.95rem] text-gray-600">
+                  {classItem.level}
+                </span>
+              </div>
               <a
                 href="#contact"
-                className="ml-auto inline-flex rounded-full border-[1.5px] border-black px-3.5 py-1.5 text-sm font-medium transition hover:bg-black hover:text-white"
+                className="inline-flex w-full items-center justify-center rounded-full border-[1.5px] border-black px-3.5 py-1.5 text-sm font-medium transition hover:bg-black hover:text-white sm:ml-auto sm:w-auto"
               >
                 Book
               </a>
@@ -115,20 +123,24 @@ const MainContent = () => {
         </ul>
       </section>
 
-      <section id="trainers" className="py-10 sm:py-12" aria-labelledby="team-title">
+      <section
+        id="trainers"
+        className="py-8 sm:py-10 md:py-12"
+        aria-labelledby="team-title"
+      >
         <h2
           id="team-title"
-          className="mb-5 text-[clamp(1.45rem,3vw,1.85rem)] font-bold"
+          className="mb-5 text-[clamp(1.35rem,4vw,1.85rem)] font-bold"
         >
           Our team
         </h2>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {trainers.map((trainer) => (
-            <article key={trainer.id}>
+            <article key={trainer.id} className="min-w-0">
               <img
                 src={trainer.photo}
                 alt={`Photo of ${trainer.name}`}
-                className="mb-3 aspect-square w-full rounded-md bg-[#e4e4e4] object-cover"
+                className="mb-3 aspect-square w-full max-w-full rounded-md bg-[#e4e4e4] object-cover"
               />
               <h3 className="text-[1.05rem] font-bold">{trainer.name}</h3>
               <span className="mt-1 mb-2 inline-block rounded-full bg-[#c6d947] px-2.5 py-0.5 text-xs font-semibold">
@@ -140,20 +152,24 @@ const MainContent = () => {
         </div>
       </section>
 
-      <section id="prices" className="py-10 sm:py-12" aria-labelledby="plans-title">
+      <section
+        id="prices"
+        className="py-8 sm:py-10 md:py-12"
+        aria-labelledby="plans-title"
+      >
         <h2
           id="plans-title"
-          className="mb-5 text-[clamp(1.45rem,3vw,1.85rem)] font-bold"
+          className="mb-5 text-[clamp(1.35rem,4vw,1.85rem)] font-bold"
         >
           Memberships
         </h2>
-        <div className="flex flex-col gap-4 md:flex-row md:items-stretch">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:items-stretch">
           {memberships.map((plan) => (
             <article
               key={plan.id}
-              className={`relative flex flex-1 flex-col gap-2.5 rounded-[10px] bg-white p-6 pt-7 ${
+              className={`relative flex min-w-0 flex-col gap-2.5 rounded-[10px] bg-white p-5 pt-7 sm:p-6 ${
                 plan.popular
-                  ? "border-2 border-[#c6d947]"
+                  ? "border-2 border-[#c6d947] sm:col-span-2 lg:col-span-1"
                   : "border-[1.5px] border-[#d8d8d8]"
               }`}
             >
@@ -196,17 +212,17 @@ const MainContent = () => {
 
       <section
         id="contact"
-        className="flex flex-col items-center py-10 pb-16 text-center sm:py-12"
+        className="flex flex-col items-center py-8 pb-14 text-center sm:py-10 sm:pb-16 md:py-12"
         aria-labelledby="contact-title"
       >
         <h2
           id="contact-title"
-          className="mb-5 w-full text-[clamp(1.45rem,3vw,1.85rem)] font-bold"
+          className="mb-5 w-full text-[clamp(1.35rem,4vw,1.85rem)] font-bold"
         >
           Come meet us
         </h2>
         <form
-          className="flex w-full max-w-md flex-col gap-4 text-left"
+          className="flex w-full max-w-md min-w-0 flex-col gap-4 text-left"
           action="#"
           method="get"
           onSubmit={(event) => event.preventDefault()}
@@ -221,7 +237,7 @@ const MainContent = () => {
               type="text"
               autoComplete="name"
               required
-              className="w-full rounded-lg border border-[#d8d8d8] bg-white px-3.5 py-2.5 focus:outline-2 focus:outline-[#c6d947] focus:outline-offset-1"
+              className="box-border w-full max-w-full rounded-lg border border-[#d8d8d8] bg-white px-3.5 py-2.5 focus:outline-2 focus:outline-[#c6d947] focus:outline-offset-1"
             />
           </div>
           <div className="flex flex-col gap-1.5">
@@ -234,7 +250,7 @@ const MainContent = () => {
               type="email"
               autoComplete="email"
               required
-              className="w-full rounded-lg border border-[#d8d8d8] bg-white px-3.5 py-2.5 focus:outline-2 focus:outline-[#c6d947] focus:outline-offset-1"
+              className="box-border w-full max-w-full rounded-lg border border-[#d8d8d8] bg-white px-3.5 py-2.5 focus:outline-2 focus:outline-[#c6d947] focus:outline-offset-1"
             />
           </div>
           <div className="flex flex-col gap-1.5">
@@ -246,12 +262,12 @@ const MainContent = () => {
               name="message"
               rows={5}
               required
-              className="min-h-28 w-full resize-y rounded-lg border border-[#d8d8d8] bg-white px-3.5 py-2.5 focus:outline-2 focus:outline-[#c6d947] focus:outline-offset-1"
+              className="box-border min-h-28 w-full max-w-full resize-y rounded-lg border border-[#d8d8d8] bg-white px-3.5 py-2.5 focus:outline-2 focus:outline-[#c6d947] focus:outline-offset-1"
             />
           </div>
           <button
             type="submit"
-            className="mx-auto w-fit rounded-full bg-[#c6d947] px-6 py-2.5 text-sm font-semibold text-black transition hover:-translate-y-px hover:bg-[#b5c73a]"
+            className="mx-auto w-full max-w-xs rounded-full bg-[#c6d947] px-6 py-2.5 text-sm font-semibold text-black transition hover:-translate-y-px hover:bg-[#b5c73a] sm:w-fit sm:max-w-none"
           >
             Send
           </button>

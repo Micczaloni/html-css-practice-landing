@@ -13,9 +13,12 @@ const Header = () => {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="sticky top-0 z-20 w-full border-b border-transparent bg-[#f3f3f3]/92 backdrop-blur-sm">
-      <div className="mx-auto flex w-full max-w-[920px] flex-wrap items-center justify-between gap-3 px-4 py-4">
-        <a href="#home" className="text-lg font-bold tracking-[0.08em]">
+    <header className="sticky top-0 z-20 w-full max-w-full border-b border-transparent bg-[#f3f3f3]/92 backdrop-blur-sm">
+      <div className="mx-auto flex w-full min-w-0 max-w-[920px] items-center justify-between gap-3 px-4 py-3 sm:py-4">
+        <a
+          href="#home"
+          className="shrink-0 text-base font-bold tracking-[0.08em] sm:text-lg"
+        >
           PULSO
         </a>
 

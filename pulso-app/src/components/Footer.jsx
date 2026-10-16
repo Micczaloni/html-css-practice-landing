@@ -1,8 +1,8 @@
 const Footer = () => {
   return (
-    <footer className="bg-[#ebebeb] pt-10 pb-6">
-      <div className="mx-auto mb-8 grid w-full max-w-[920px] grid-cols-1 gap-6 px-4 sm:grid-cols-3">
-        <div>
+    <footer className="w-full max-w-full bg-[#ebebeb] pt-8 pb-6 sm:pt-10">
+      <div className="mx-auto mb-8 grid w-full min-w-0 max-w-[920px] grid-cols-1 gap-6 px-4 sm:grid-cols-3">
+        <div className="min-w-0">
           <p className="mb-1.5 font-bold text-black">PULSO Studio</p>
           <p className="text-[0.95rem] text-gray-600">
             12 Rue du Sport
@@ -10,7 +10,7 @@ const Footer = () => {
             75011 Paris
           </p>
         </div>
-        <div>
+        <div className="min-w-0">
           <p className="mb-1.5 font-bold text-black">Opening hours</p>
           <p className="text-[0.95rem] text-gray-600">
             Mon-Fri 6:30-21:00
@@ -18,7 +18,7 @@ const Footer = () => {
             Sat-Sun 9:00-14:00
           </p>
         </div>
-        <div>
+        <div className="min-w-0">
           <p className="mb-1.5 font-bold text-black">Follow us</p>
           <p className="text-[0.95rem] text-gray-600">
             <a
