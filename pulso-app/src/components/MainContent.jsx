@@ -69,10 +69,10 @@ const MainContent = () => {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setSelectedDay(day)}
-                className={`rounded-full px-3 py-1.5 text-sm font-semibold transition sm:px-3.5 ${
+                className={`rounded-full px-3 py-1.5 text-sm font-semibold transition duration-150 sm:px-3.5 ${
                   isActive
-                    ? "bg-[#c6d947] text-black"
-                    : "bg-transparent text-gray-500 hover:text-black"
+                    ? "bg-[#c6d947] text-black hover:bg-[#b5c73a]"
+                    : "bg-transparent text-gray-500 hover:bg-[#e8e8e8] hover:text-black"
                 }`}
               >
                 {day}
