@@ -4,3 +4,7 @@ Thumbs.db
 Desktop.ini
 .vscode/
 .idea/
+
+# Dependencies / build
+node_modules/
+dist/
