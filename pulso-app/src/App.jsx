@@ -5,12 +5,12 @@ import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div>
+    <div className="min-h-svh overflow-x-hidden bg-[#f3f3f3] text-[#1a1a1a]">
       <Header />
-      <div className="bg-[#f3f3f3]">
+      <main>
         <Hero />
         <MainContent />
-      </div>
+      </main>
       <Footer />
     </div>
   );
