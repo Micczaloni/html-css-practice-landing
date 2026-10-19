@@ -2,13 +2,24 @@ import { useState } from "react";
 import { DAYS, classes } from "../data/classes";
 import { trainers } from "../data/trainers";
 import { memberships } from "../data/memberships";
+import SpotStepper from "./SpotStepper";
 
 const MainContent = () => {
   const [selectedDay, setSelectedDay] = useState("Mon");
+  const [spotsByClass, setSpotsByClass] = useState({});
 
   const visibleClasses = classes.filter(
     (classItem) => classItem.day === selectedDay,
   );
+
+  const getSpots = (classId) => spotsByClass[classId] ?? 1;
+
+  const setSpots = (classId, nextValue) => {
+    setSpotsByClass((prev) => ({
+      ...prev,
+      [classId]: nextValue,
+    }));
+  };
 
   return (
     <div className="mx-auto w-full min-w-0 max-w-[920px] px-4">
@@ -106,12 +117,18 @@ const MainContent = () => {
                   {classItem.level}
                 </span>
               </div>
-              <a
-                href="#contact"
-                className="inline-flex w-full items-center justify-center rounded-full border-[1.5px] border-black px-3.5 py-1.5 text-sm font-medium transition hover:bg-black hover:text-white sm:ml-auto sm:w-auto"
-              >
-                Book
-              </a>
+              <div className="flex w-full flex-col items-stretch gap-3 sm:ml-auto sm:w-auto sm:flex-row sm:items-center">
+                <SpotStepper
+                  value={getSpots(classItem.id)}
+                  onChange={(nextValue) => setSpots(classItem.id, nextValue)}
+                />
+                <a
+                  href="#contact"
+                  className="inline-flex w-full items-center justify-center rounded-full border-[1.5px] border-black px-3.5 py-1.5 text-sm font-medium transition hover:bg-black hover:text-white sm:w-auto"
+                >
+                  Book {getSpots(classItem.id)}
+                </a>
+              </div>
             </li>
           ))}
 
