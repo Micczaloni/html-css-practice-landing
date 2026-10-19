@@ -13,7 +13,7 @@ const Header = () => {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="sticky top-0 z-20 w-full max-w-full border-b border-transparent bg-[#f3f3f3]/92 backdrop-blur-sm">
+    <header className="sticky top-0 z-20 w-full max-w-full border-b border-black/5 bg-[#f3f3f3]/70 shadow-[0_1px_0_rgba(255,255,255,0.4)_inset] backdrop-blur-md supports-[backdrop-filter]:bg-[#f3f3f3]/55">
       <div className="mx-auto flex w-full min-w-0 max-w-[920px] items-center justify-between gap-3 px-4 py-3 sm:py-4">
         <a
           href="#home"
@@ -78,7 +78,7 @@ const Header = () => {
       {menuOpen && (
         <nav
           id="mobile-nav"
-          className="border-t border-gray-200 bg-[#f3f3f3] md:hidden"
+          className="border-t border-black/5 bg-[#f3f3f3]/80 backdrop-blur-md md:hidden"
           aria-label="Mobile"
         >
           <ul className="mx-auto flex w-full max-w-[920px] flex-col gap-1 px-4 py-3">

@@ -27,8 +27,8 @@ const MainContent = () => {
         <h2 className="mb-5 text-[clamp(1.35rem,4vw,1.85rem)] font-bold">
           A studio, three commitments
         </h2>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <article className="min-w-0 rounded-[10px] border border-[#d8d8d8] bg-white p-4 sm:p-5">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <article className="min-w-0 w-full rounded-[10px] border border-[#d8d8d8] bg-white p-4 sm:p-5">
             <h3 className="mb-1.5 text-[1.05rem] font-bold">
               Personalised training
             </h3>
@@ -36,13 +36,13 @@ const MainContent = () => {
               Plans adapted to your level and goals.
             </p>
           </article>
-          <article className="min-w-0 rounded-[10px] border border-[#d8d8d8] bg-white p-4 sm:p-5">
+          <article className="min-w-0 w-full rounded-[10px] border border-[#d8d8d8] bg-white p-4 sm:p-5">
             <h3 className="mb-1.5 text-[1.05rem] font-bold">Real community</h3>
             <p className="text-[0.95rem] text-gray-600">
               A welcoming space where progress is shared.
             </p>
           </article>
-          <article className="min-w-0 rounded-[10px] border border-[#d8d8d8] bg-white p-4 sm:p-5 sm:col-span-2 lg:col-span-1">
+          <article className="min-w-0 w-full rounded-[10px] border border-[#d8d8d8] bg-white p-4 sm:p-5">
             <h3 className="mb-1.5 text-[1.05rem] font-bold">
               Flexible schedule
             </h3>
@@ -180,13 +180,13 @@ const MainContent = () => {
         >
           Memberships
         </h2>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:items-stretch">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:items-stretch">
           {memberships.map((plan) => (
             <article
               key={plan.id}
-              className={`relative flex min-w-0 flex-col gap-2.5 rounded-[10px] bg-white p-5 pt-7 sm:p-6 ${
+              className={`relative flex w-full min-w-0 flex-col gap-2.5 rounded-[10px] bg-white p-5 pt-7 sm:p-6 ${
                 plan.popular
-                  ? "border-2 border-[#c6d947] sm:col-span-2 lg:col-span-1"
+                  ? "border-2 border-[#c6d947]"
                   : "border-[1.5px] border-[#d8d8d8]"
               }`}
             >
