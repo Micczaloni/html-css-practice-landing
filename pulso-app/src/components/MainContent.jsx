@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router";
 
 import { DAYS } from "../data/classes";
 import { trainers } from "../data/trainers";
@@ -147,9 +148,12 @@ export default function MainContent() {
                     >
                       {classItem.time}
                     </time>
-                    <span className="min-w-16 font-bold sm:min-w-20">
+                    <Link
+                      to={`/classes/${classItem.id}`}
+                      className="min-w-16 font-bold underline-offset-2 hover:underline sm:min-w-20"
+                    >
                       {classItem.name}
-                    </span>
+                    </Link>
                     <span className="text-[0.95rem] text-gray-600">
                       {classItem.coach}
                     </span>
@@ -162,7 +166,13 @@ export default function MainContent() {
                   </div>
                   {classItem.description && (
                     <p className="mt-1.5 max-w-xl text-[0.9rem] text-gray-600">
-                      {classItem.description}
+                      {classItem.description}{" "}
+                      <Link
+                        to={`/classes/${classItem.id}`}
+                        className="font-medium text-black underline underline-offset-2"
+                      >
+                        Details
+                      </Link>
                     </p>
                   )}
                 </div>

@@ -4,6 +4,7 @@ import Hero from "./components/Hero";
 import MainContent from "./components/MainContent";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
+import ClassDetail from "./components/ClassDetail";
 
 function HomePage() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/classes/:id" element={<ClassDetail />} />
             <Route path="/login" element={<Login mode="login" />} />
             <Route path="/signup" element={<Login mode="signup" />} />
           </Routes>
