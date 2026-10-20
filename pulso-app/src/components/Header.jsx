@@ -51,13 +51,21 @@ const Header = () => {
 
         <div className="flex items-center gap-3">
           {session?.user ? (
-            <button
-              type="button"
-              onClick={handleSignOut}
-              className="hidden cursor-pointer text-sm font-medium text-gray-700 hover:text-black sm:inline-flex"
-            >
-              Sign out
-            </button>
+            <>
+              <span className="hidden max-w-[10rem] truncate text-sm text-gray-600 sm:inline md:max-w-[14rem]">
+                Hello,{" "}
+                <span className="font-semibold text-black">
+                  {session.user.name || session.user.email}
+                </span>
+              </span>
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="hidden cursor-pointer text-sm font-medium text-gray-700 hover:text-black sm:inline-flex"
+              >
+                Sign out
+              </button>
+            </>
           ) : (
             <Link
               to="/login"
@@ -128,13 +136,21 @@ const Header = () => {
             ))}
             <li>
               {session?.user ? (
-                <button
-                  type="button"
-                  onClick={handleSignOut}
-                  className="block w-full cursor-pointer rounded-md px-2 py-2.5 text-left text-[0.95rem] font-medium text-gray-700 hover:bg-white hover:text-black"
-                >
-                  Sign out
-                </button>
+                <>
+                  <p className="px-2 py-2 text-[0.95rem] text-gray-600">
+                    Hello,{" "}
+                    <span className="font-semibold text-black">
+                      {session.user.name || session.user.email}
+                    </span>
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleSignOut}
+                    className="block w-full cursor-pointer rounded-md px-2 py-2.5 text-left text-[0.95rem] font-medium text-gray-700 hover:bg-white hover:text-black"
+                  >
+                    Sign out
+                  </button>
+                </>
               ) : (
                 <Link
                   to="/login"

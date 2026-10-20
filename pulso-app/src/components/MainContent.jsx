@@ -19,6 +19,9 @@ export default function MainContent() {
   // SpotStepper is controlled: values live here, not inside the stepper
   const [spotsByClass, setSpotsByClass] = useState({});
 
+  // demo contact form — no backend, just a thank-you message
+  const [contactSent, setContactSent] = useState(false);
+
   useEffect(() => {
     async function loadClasses() {
       try {
@@ -292,7 +295,7 @@ export default function MainContent() {
         </div>
       </section>
 
-      {/* --- Contact form (no backend yet, so we just prevent reload) --- */}
+      {/* --- Contact form (demo — no backend, thank-you message only) --- */}
       <section
         id="contact"
         className="flex flex-col items-center py-8 pb-14 text-center sm:py-10 sm:pb-16 md:py-12"
@@ -304,57 +307,70 @@ export default function MainContent() {
         >
           Come meet us
         </h2>
-        <form
-          className="flex w-full max-w-md min-w-0 flex-col gap-4 text-left"
-          action="#"
-          method="get"
-          onSubmit={(event) => event.preventDefault()}
-        >
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="name" className="text-sm font-semibold">
-              Name
-            </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              autoComplete="name"
-              required
-              className="box-border w-full max-w-full rounded-lg border border-[#d8d8d8] bg-white px-3.5 py-2.5 focus:outline-2 focus:outline-[#c6d947] focus:outline-offset-1"
-            />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="email" className="text-sm font-semibold">
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              className="box-border w-full max-w-full rounded-lg border border-[#d8d8d8] bg-white px-3.5 py-2.5 focus:outline-2 focus:outline-[#c6d947] focus:outline-offset-1"
-            />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="message" className="text-sm font-semibold">
-              Message
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              rows={5}
-              required
-              className="box-border min-h-28 w-full max-w-full resize-y rounded-lg border border-[#d8d8d8] bg-white px-3.5 py-2.5 focus:outline-2 focus:outline-[#c6d947] focus:outline-offset-1"
-            />
-          </div>
-          <button
-            type="submit"
-            className="mx-auto w-full max-w-xs rounded-full bg-[#c6d947] px-6 py-2.5 text-sm font-semibold text-black transition hover:-translate-y-px hover:bg-[#b5c73a] sm:w-fit sm:max-w-none"
+
+        {contactSent ? (
+          <p
+            role="status"
+            className="w-full max-w-md rounded-[10px] border border-[#c6d947] bg-[#c6d947]/20 px-5 py-6 text-[1.05rem] font-medium text-black"
           >
-            Send
-          </button>
-        </form>
+            Thank you for reaching us — we&apos;ll get back to you soon.
+          </p>
+        ) : (
+          <form
+            className="flex w-full max-w-md min-w-0 flex-col gap-4 text-left"
+            action="#"
+            method="get"
+            onSubmit={(event) => {
+              event.preventDefault();
+              setContactSent(true);
+            }}
+          >
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="name" className="text-sm font-semibold">
+                Name
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                autoComplete="name"
+                required
+                className="box-border w-full max-w-full rounded-lg border border-[#d8d8d8] bg-white px-3.5 py-2.5 focus:outline-2 focus:outline-[#c6d947] focus:outline-offset-1"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="email" className="text-sm font-semibold">
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="box-border w-full max-w-full rounded-lg border border-[#d8d8d8] bg-white px-3.5 py-2.5 focus:outline-2 focus:outline-[#c6d947] focus:outline-offset-1"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="message" className="text-sm font-semibold">
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows={5}
+                required
+                className="box-border min-h-28 w-full max-w-full resize-y rounded-lg border border-[#d8d8d8] bg-white px-3.5 py-2.5 focus:outline-2 focus:outline-[#c6d947] focus:outline-offset-1"
+              />
+            </div>
+            <button
+              type="submit"
+              className="mx-auto w-full max-w-xs rounded-full bg-[#c6d947] px-6 py-2.5 text-sm font-semibold text-black transition hover:-translate-y-px hover:bg-[#b5c73a] sm:w-fit sm:max-w-none"
+            >
+              Send
+            </button>
+          </form>
+        )}
       </section>
     </div>
   );
