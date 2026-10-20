@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router";
 import { trainers } from "../data/trainers";
 import SpotStepper from "./SpotStepper";
 
+// Single class page — same idea as BrewHaus product detail, but we use numeric id
 export default function ClassDetail() {
   const { id } = useParams();
   const [classItem, setClassItem] = useState(null);
@@ -15,6 +16,7 @@ export default function ClassDetail() {
       setLoading(true);
       setError(null);
       try {
+        // goes through Vite proxy (dev) or Vercel rewrite (prod) → Express
         const response = await fetch(`/api/classes/${id}`);
         if (response.status === 404) {
           setError("No such class");
@@ -36,6 +38,7 @@ export default function ClassDetail() {
     loadClass();
   }, [id]);
 
+  // photo/bio still live in the frontend trainers file — not in the DB yet
   const coach = classItem
     ? trainers.find((t) => t.name === classItem.coach)
     : null;

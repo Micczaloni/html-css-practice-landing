@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Login from "./components/Login";
 import ClassDetail from "./components/ClassDetail";
 
+// Landing page pieces — kept separate so /login doesn't render the whole site
 function HomePage() {
   return (
     <>
@@ -17,12 +18,14 @@ function HomePage() {
 
 function App() {
   return (
+    // Router wraps everything so Header links + Login can use <Link> / navigate()
     <BrowserRouter>
       <div className="min-h-svh w-full max-w-full bg-[#f3f3f3] text-[#1a1a1a]">
         <Header />
         <main>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            {/* :id comes from the URL, e.g. /classes/33 → ClassDetail fetches that row */}
             <Route path="/classes/:id" element={<ClassDetail />} />
             <Route path="/login" element={<Login mode="login" />} />
             <Route path="/signup" element={<Login mode="signup" />} />

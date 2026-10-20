@@ -22,6 +22,7 @@ export default function MainContent() {
   // demo contact form — no backend, just a thank-you message
   const [contactSent, setContactSent] = useState(false);
 
+  // load once on mount — empty [] so we don't refetch on every day-tab click
   useEffect(() => {
     async function loadClasses() {
       try {

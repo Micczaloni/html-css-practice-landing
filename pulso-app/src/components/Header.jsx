@@ -13,6 +13,7 @@ const navLinks = [
 const Header = () => {
   // tracks whether the burger menu is open
   const [menuOpen, setMenuOpen] = useState(false);
+  // Better Auth hook — if session.user exists we show Hello + Sign out
   const { data: session } = useSession();
 
   // close after clicking a link so the panel doesn't stay open

@@ -11,6 +11,7 @@ import classesRouter from "./routes/classes.js";
 const app = express();
 const PORT = Number(process.env.PORT ?? 3000);
 
+// allow the Vite/Vercel frontend to call us with cookies
 app.use(
   cors({
     origin: process.env.CLIENT_URL ?? "http://localhost:5173",
@@ -23,10 +24,12 @@ app.all("/api/auth/*splat", toNodeHandler(auth));
 app.use(express.json());
 app.use("/api/classes", classesRouter);
 
+// tiny ping so we can check the deploy is alive
 app.get("/api/health", (_req, res) => {
   res.json({ ok: true, time: new Date().toISOString() });
 });
 
+// anything else under /api → clean 404 JSON
 app.use("/api/*splat", (_req, res) => {
   res.status(404).json({ error: "No such endpoint" });
 });

@@ -19,6 +19,7 @@ export function Login({ mode }) {
     const name = String(form.get("name") ?? "");
 
     try {
+      // both hit /api/auth through auth-client — server stores the user in Neon
       const result =
         mode === "signup"
           ? await signUp.email({ email, password, name })
