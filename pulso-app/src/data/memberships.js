@@ -1,3 +1,4 @@
+// Pricing plans — popular: true gets the lime border + badge
 export const memberships = [
   {
     id: 1,

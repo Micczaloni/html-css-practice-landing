@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+// Same links for desktop nav and the mobile dropdown
 const navLinks = [
   { href: "#classes", label: "Classes" },
   { href: "#trainers", label: "Trainers" },
@@ -8,8 +9,10 @@ const navLinks = [
 ];
 
 const Header = () => {
+  // tracks whether the burger menu is open
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // close after clicking a link so the panel doesn't stay open
   const closeMenu = () => setMenuOpen(false);
 
   return (
@@ -22,6 +25,7 @@ const Header = () => {
           PULSO
         </a>
 
+        {/* Desktop only — hidden below md */}
         <nav className="hidden items-center gap-6 md:flex" aria-label="Primary">
           <ul className="flex flex-row items-center gap-6">
             {navLinks.map((link) => (
@@ -45,6 +49,7 @@ const Header = () => {
             Bookings
           </a>
 
+          {/* Burger button — only on small screens. Click flips menuOpen. */}
           <button
             type="button"
             className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-gray-300 bg-white md:hidden"
@@ -53,7 +58,10 @@ const Header = () => {
             aria-controls="mobile-nav"
             onClick={() => setMenuOpen((open) => !open)}
           >
-            <span className="sr-only">{menuOpen ? "Close menu" : "Open menu"}</span>
+            <span className="sr-only">
+              {menuOpen ? "Close menu" : "Open menu"}
+            </span>
+            {/* three bars -> X when open */}
             <span className="flex w-5 flex-col gap-1.5" aria-hidden="true">
               <span
                 className={`block h-0.5 w-full bg-black transition ${
@@ -75,6 +83,7 @@ const Header = () => {
         </div>
       </div>
 
+      {/* Mobile menu — only renders when menuOpen is true */}
       {menuOpen && (
         <nav
           id="mobile-nav"

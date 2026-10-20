@@ -3,6 +3,7 @@ import sofiaImg from "../assets/trainers/sofia.jpg";
 import alexImg from "../assets/trainers/alex.jpg";
 import ninaImg from "../assets/trainers/nina.jpg";
 
+// Team cards — photos imported here so MainContent just maps over this array
 export const trainers = [
   {
     id: 1,

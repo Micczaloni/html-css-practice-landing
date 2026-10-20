@@ -1,3 +1,5 @@
+// Controlled component: parent owns the number (value),
+// we only show it and call onChange when +/- is clicked.
 const SpotStepper = ({ value, onChange, min = 1, max = 8 }) => {
   const decrease = () => {
     if (value > min) {

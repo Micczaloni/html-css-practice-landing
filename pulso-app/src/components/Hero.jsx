@@ -1,4 +1,7 @@
+import heroImg from "../assets/hero-studio.jpg";
+
 const Hero = () => {
+  // id="home" so the logo link can jump back to the top
   return (
     <section
       id="home"
@@ -12,6 +15,14 @@ const Hero = () => {
       <p className="max-w-xl px-1 text-base text-gray-600 sm:text-[1.05rem]">
         Classes, trainers and plans to fit training into your life.
       </p>
+
+      <img
+        src={heroImg}
+        alt="Bright PULSO fitness studio with mats and training equipment"
+        className="mt-2 aspect-[16/9] w-full max-w-full rounded-[10px] object-cover"
+      />
+
+      {/* stacked on phone, side by side from sm up */}
       <div className="mt-2 flex w-full max-w-sm flex-col gap-3 sm:max-w-none sm:flex-row sm:justify-center">
         <a
           href="#classes"

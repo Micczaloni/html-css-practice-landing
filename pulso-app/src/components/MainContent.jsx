@@ -1,17 +1,25 @@
 import { useState } from "react";
+
 import { DAYS, classes } from "../data/classes";
 import { trainers } from "../data/trainers";
 import { memberships } from "../data/memberships";
+
 import SpotStepper from "./SpotStepper";
 
-const MainContent = () => {
+export default function MainContent() {
+  // which day tab is selected — drives the filter below
   const [selectedDay, setSelectedDay] = useState("Mon");
+
+  // how many spots per class id, e.g. { 1: 2, 3: 1 }
+  // SpotStepper is controlled: values live here, not inside the stepper
   const [spotsByClass, setSpotsByClass] = useState({});
 
+  // only show classes matching the selected day
   const visibleClasses = classes.filter(
     (classItem) => classItem.day === selectedDay,
   );
 
+  // default to 1 if the user hasn't touched that class yet
   const getSpots = (classId) => spotsByClass[classId] ?? 1;
 
   const setSpots = (classId, nextValue) => {
@@ -23,6 +31,7 @@ const MainContent = () => {
 
   return (
     <div className="mx-auto w-full min-w-0 max-w-[920px] px-4">
+      {/* --- Commitments --- */}
       <section className="py-8 sm:py-10 md:py-12">
         <h2 className="mb-5 text-[clamp(1.35rem,4vw,1.85rem)] font-bold">
           A studio, three commitments
@@ -53,6 +62,7 @@ const MainContent = () => {
         </div>
       </section>
 
+      {/* --- Class schedule (day filter + SpotStepper) --- */}
       <section
         id="classes"
         className="py-8 sm:py-10 md:py-12"
@@ -65,6 +75,7 @@ const MainContent = () => {
           Class schedule
         </h2>
 
+        {/* clicking a day updates selectedDay -> list re-filters */}
         <div
           className="mb-5 flex flex-wrap gap-1.5 sm:gap-2"
           role="tablist"
@@ -117,6 +128,8 @@ const MainContent = () => {
                   {classItem.level}
                 </span>
               </div>
+
+              {/* value + onChange = controlled pattern (same idea as QuantityStepper) */}
               <div className="flex w-full flex-col items-stretch gap-3 sm:ml-auto sm:w-auto sm:flex-row sm:items-center">
                 <SpotStepper
                   value={getSpots(classItem.id)}
@@ -140,6 +153,7 @@ const MainContent = () => {
         </ul>
       </section>
 
+      {/* --- Trainers (mapped from data/trainers.js) --- */}
       <section
         id="trainers"
         className="py-8 sm:py-10 md:py-12"
@@ -169,6 +183,7 @@ const MainContent = () => {
         </div>
       </section>
 
+      {/* --- Memberships --- */}
       <section
         id="prices"
         className="py-8 sm:py-10 md:py-12"
@@ -180,6 +195,7 @@ const MainContent = () => {
         >
           Memberships
         </h2>
+        {/* equal width cards: 1 col mobile, 3 from md */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:items-stretch">
           {memberships.map((plan) => (
             <article
@@ -227,6 +243,7 @@ const MainContent = () => {
         </div>
       </section>
 
+      {/* --- Contact form (no backend yet, so we just prevent reload) --- */}
       <section
         id="contact"
         className="flex flex-col items-center py-8 pb-14 text-center sm:py-10 sm:pb-16 md:py-12"
@@ -292,6 +309,4 @@ const MainContent = () => {
       </section>
     </div>
   );
-};
-
-export default MainContent;
+}

@@ -1,6 +1,7 @@
 const Footer = () => {
   return (
     <footer className="w-full max-w-full bg-[#ebebeb] pt-8 pb-6 sm:pt-10">
+      {/* one column on mobile, three from sm */}
       <div className="mx-auto mb-8 grid w-full min-w-0 max-w-[920px] grid-cols-1 gap-6 px-4 sm:grid-cols-3">
         <div className="min-w-0">
           <p className="mb-1.5 font-bold text-black">PULSO Studio</p>

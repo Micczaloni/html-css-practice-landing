@@ -1,5 +1,7 @@
+// Day tabs for the schedule filter
 export const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+// Hardcoded class list — each item has a day so we can filter in MainContent
 export const classes = [
   {
     id: 1,
