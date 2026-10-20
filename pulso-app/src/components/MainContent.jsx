@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-import { DAYS, classes } from "../data/classes";
+import { DAYS } from "../data/classes";
 import { trainers } from "../data/trainers";
 import { memberships } from "../data/memberships";
 
@@ -10,9 +10,30 @@ export default function MainContent() {
   // which day tab is selected — drives the filter below
   const [selectedDay, setSelectedDay] = useState("Mon");
 
+  // classes from Neon via Express (same idea as BrewHaus Shop + /api/products)
+  const [classes, setClasses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   // how many spots per class id, e.g. { 1: 2, 3: 1 }
   // SpotStepper is controlled: values live here, not inside the stepper
   const [spotsByClass, setSpotsByClass] = useState({});
+
+  useEffect(() => {
+    async function loadClasses() {
+      try {
+        const response = await fetch("/api/classes");
+        if (!response.ok) throw new Error("Failed to load classes");
+        const data = await response.json();
+        setClasses(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadClasses();
+  }, []);
 
   // only show classes matching the selected day
   const visibleClasses = classes.filter(
@@ -104,48 +125,55 @@ export default function MainContent() {
         </div>
 
         <ul className="min-w-0">
-          {visibleClasses.map((classItem, index) => (
-            <li
-              key={classItem.id}
-              className={`flex min-w-0 flex-col gap-3 border-b border-[#d8d8d8] py-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2 ${
-                index === 0 ? "border-t" : ""
-              }`}
-            >
-              <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 sm:gap-x-4">
-                <time
-                  dateTime={classItem.time}
-                  className="min-w-14 font-semibold"
-                >
-                  {classItem.time}
-                </time>
-                <span className="min-w-16 font-bold sm:min-w-20">
-                  {classItem.name}
-                </span>
-                <span className="text-[0.95rem] text-gray-600">
-                  {classItem.coach}
-                </span>
-                <span className="text-[0.95rem] text-gray-600">
-                  {classItem.level}
-                </span>
-              </div>
-
-              {/* value + onChange = controlled pattern (same idea as QuantityStepper) */}
-              <div className="flex w-full flex-col items-stretch gap-3 sm:ml-auto sm:w-auto sm:flex-row sm:items-center">
-                <SpotStepper
-                  value={getSpots(classItem.id)}
-                  onChange={(nextValue) => setSpots(classItem.id, nextValue)}
-                />
-                <a
-                  href="#contact"
-                  className="inline-flex w-full items-center justify-center rounded-full border-[1.5px] border-black px-3.5 py-1.5 text-sm font-medium transition hover:bg-black hover:text-white sm:w-auto"
-                >
-                  Book {getSpots(classItem.id)}
-                </a>
-              </div>
+          {loading && (
+            <li className="border-t border-[#d8d8d8] py-4 text-gray-600">
+              Loading classes…
             </li>
-          ))}
+          )}
 
-          {visibleClasses.length === 0 && (
+          {!loading &&
+            visibleClasses.map((classItem, index) => (
+              <li
+                key={classItem.id}
+                className={`flex min-w-0 flex-col gap-3 border-b border-[#d8d8d8] py-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2 ${
+                  index === 0 ? "border-t" : ""
+                }`}
+              >
+                <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 sm:gap-x-4">
+                  <time
+                    dateTime={classItem.time}
+                    className="min-w-14 font-semibold"
+                  >
+                    {classItem.time}
+                  </time>
+                  <span className="min-w-16 font-bold sm:min-w-20">
+                    {classItem.name}
+                  </span>
+                  <span className="text-[0.95rem] text-gray-600">
+                    {classItem.coach}
+                  </span>
+                  <span className="text-[0.95rem] text-gray-600">
+                    {classItem.level}
+                  </span>
+                </div>
+
+                {/* value + onChange = controlled pattern (same idea as QuantityStepper) */}
+                <div className="flex w-full flex-col items-stretch gap-3 sm:ml-auto sm:w-auto sm:flex-row sm:items-center">
+                  <SpotStepper
+                    value={getSpots(classItem.id)}
+                    onChange={(nextValue) => setSpots(classItem.id, nextValue)}
+                  />
+                  <a
+                    href="#contact"
+                    className="inline-flex w-full items-center justify-center rounded-full border-[1.5px] border-black px-3.5 py-1.5 text-sm font-medium transition hover:bg-black hover:text-white sm:w-auto"
+                  >
+                    Book {getSpots(classItem.id)}
+                  </a>
+                </div>
+              </li>
+            ))}
+
+          {!loading && visibleClasses.length === 0 && (
             <li className="border-t border-[#d8d8d8] py-4 text-gray-600">
               No classes on this day.
             </li>

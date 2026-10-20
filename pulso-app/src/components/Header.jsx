@@ -1,29 +1,37 @@
 import { useState } from "react";
+import { Link } from "react-router";
+import { useSession, signOut } from "../lib/auth-client";
 
-// Same links for desktop nav and the mobile dropdown
+// /#… works from /login too; plain #… only works on the home page
 const navLinks = [
-  { href: "#classes", label: "Classes" },
-  { href: "#trainers", label: "Trainers" },
-  { href: "#prices", label: "Prices" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#classes", label: "Classes" },
+  { href: "/#trainers", label: "Trainers" },
+  { href: "/#prices", label: "Prices" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 const Header = () => {
   // tracks whether the burger menu is open
   const [menuOpen, setMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   // close after clicking a link so the panel doesn't stay open
   const closeMenu = () => setMenuOpen(false);
 
+  const handleSignOut = async () => {
+    await signOut();
+    closeMenu();
+  };
+
   return (
     <header className="sticky top-0 z-20 w-full max-w-full border-b border-black/5 bg-[#f3f3f3]/70 shadow-[0_1px_0_rgba(255,255,255,0.4)_inset] backdrop-blur-md supports-[backdrop-filter]:bg-[#f3f3f3]/55">
       <div className="mx-auto flex w-full min-w-0 max-w-[920px] items-center justify-between gap-3 px-4 py-3 sm:py-4">
-        <a
-          href="#home"
+        <Link
+          to="/"
           className="shrink-0 text-base font-bold tracking-[0.08em] sm:text-lg"
         >
           PULSO
-        </a>
+        </Link>
 
         {/* Desktop only — hidden below md */}
         <nav className="hidden items-center gap-6 md:flex" aria-label="Primary">
@@ -42,8 +50,24 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-3">
+          {session?.user ? (
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className="hidden cursor-pointer text-sm font-medium text-gray-700 hover:text-black sm:inline-flex"
+            >
+              Sign out
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="hidden text-sm font-medium text-gray-700 hover:text-black sm:inline-flex"
+            >
+              Sign in
+            </Link>
+          )}
           <a
-            href="#classes"
+            href="/#classes"
             className="hidden rounded-full bg-[#c6d947] px-4 py-2 text-sm font-semibold text-black hover:bg-[#b5c73a] sm:inline-flex"
           >
             Bookings
@@ -102,9 +126,28 @@ const Header = () => {
                 </a>
               </li>
             ))}
+            <li>
+              {session?.user ? (
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="block w-full cursor-pointer rounded-md px-2 py-2.5 text-left text-[0.95rem] font-medium text-gray-700 hover:bg-white hover:text-black"
+                >
+                  Sign out
+                </button>
+              ) : (
+                <Link
+                  to="/login"
+                  onClick={closeMenu}
+                  className="block rounded-md px-2 py-2.5 text-[0.95rem] font-medium text-gray-700 hover:bg-white hover:text-black"
+                >
+                  Sign in
+                </Link>
+              )}
+            </li>
             <li className="pt-2 sm:hidden">
               <a
-                href="#classes"
+                href="/#classes"
                 onClick={closeMenu}
                 className="inline-flex rounded-full bg-[#c6d947] px-4 py-2 text-sm font-semibold text-black"
               >
