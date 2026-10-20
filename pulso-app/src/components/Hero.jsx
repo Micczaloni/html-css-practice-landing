@@ -1,4 +1,4 @@
-import heroImg from "../assets/hero-studio.jpg";
+import heroImg from "../assets/hero-studio.webp";
 
 const Hero = () => {
   // id="home" so the logo link can jump back to the top

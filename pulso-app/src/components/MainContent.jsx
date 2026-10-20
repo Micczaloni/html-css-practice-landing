@@ -168,7 +168,7 @@ export default function MainContent() {
                     </span>
                   </div>
                   {classItem.description && (
-                    <p className="mt-1.5 max-w-xl text-[0.9rem] text-gray-600">
+                    <p className="mt-1.5 max-w-xl text-[0.8rem] text-gray-500">
                       {classItem.description}{" "}
                       <Link
                         to={`/classes/${classItem.id}`}

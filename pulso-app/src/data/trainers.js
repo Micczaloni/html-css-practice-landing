@@ -1,7 +1,7 @@
-import martaImg from "../assets/trainers/marta.jpg";
-import sofiaImg from "../assets/trainers/sofia.jpg";
-import alexImg from "../assets/trainers/alex.jpg";
-import ninaImg from "../assets/trainers/nina.jpg";
+import martaImg from "../assets/trainers/marta.webp";
+import sofiaImg from "../assets/trainers/sofia.webp";
+import alexImg from "../assets/trainers/alex.webp";
+import ninaImg from "../assets/trainers/nina.webp";
 
 // Team cards — photos imported here so MainContent just maps over this array
 export const trainers = [
