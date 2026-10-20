@@ -68,4 +68,7 @@ export const classes = pgTable("classes", {
   name: text("name").notNull(),
   coach: text("coach").notNull(),
   level: text("level").notNull(),
+  description: text("description").notNull(),
+  duration: integer("duration").notNull(), // minutes
+  spots: integer("spots").notNull(), // capacity of the room
 });

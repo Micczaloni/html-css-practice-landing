@@ -135,26 +135,36 @@ export default function MainContent() {
             visibleClasses.map((classItem, index) => (
               <li
                 key={classItem.id}
-                className={`flex min-w-0 flex-col gap-3 border-b border-[#d8d8d8] py-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2 ${
+                className={`flex min-w-0 flex-col gap-3 border-b border-[#d8d8d8] py-4 sm:flex-row sm:flex-wrap sm:items-start sm:gap-x-4 sm:gap-y-2 ${
                   index === 0 ? "border-t" : ""
                 }`}
               >
-                <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 sm:gap-x-4">
-                  <time
-                    dateTime={classItem.time}
-                    className="min-w-14 font-semibold"
-                  >
-                    {classItem.time}
-                  </time>
-                  <span className="min-w-16 font-bold sm:min-w-20">
-                    {classItem.name}
-                  </span>
-                  <span className="text-[0.95rem] text-gray-600">
-                    {classItem.coach}
-                  </span>
-                  <span className="text-[0.95rem] text-gray-600">
-                    {classItem.level}
-                  </span>
+                <div className="min-w-0 flex-1">
+                  <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 sm:gap-x-4">
+                    <time
+                      dateTime={classItem.time}
+                      className="min-w-14 font-semibold"
+                    >
+                      {classItem.time}
+                    </time>
+                    <span className="min-w-16 font-bold sm:min-w-20">
+                      {classItem.name}
+                    </span>
+                    <span className="text-[0.95rem] text-gray-600">
+                      {classItem.coach}
+                    </span>
+                    <span className="text-[0.95rem] text-gray-600">
+                      {classItem.level}
+                    </span>
+                    <span className="text-[0.9rem] text-gray-500">
+                      {classItem.duration} min · {classItem.spots} spots
+                    </span>
+                  </div>
+                  {classItem.description && (
+                    <p className="mt-1.5 max-w-xl text-[0.9rem] text-gray-600">
+                      {classItem.description}
+                    </p>
+                  )}
                 </div>
 
                 {/* value + onChange = controlled pattern (same idea as QuantityStepper) */}
@@ -162,6 +172,7 @@ export default function MainContent() {
                   <SpotStepper
                     value={getSpots(classItem.id)}
                     onChange={(nextValue) => setSpots(classItem.id, nextValue)}
+                    max={classItem.spots}
                   />
                   <a
                     href="#contact"

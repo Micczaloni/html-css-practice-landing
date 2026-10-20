@@ -1,4 +1,4 @@
-// Seed data for the classes table (same content as Week 2 hardcoded list)
+// Seed data for the classes table (same schedule as Week 2 + richer fields)
 export const classesData = [
   {
     day: "Mon",
@@ -6,6 +6,9 @@ export const classesData = [
     name: "HIIT",
     coach: "Marta R.",
     level: "Intermediate",
+    description: "Short intervals, high intensity — start the week with power.",
+    duration: 45,
+    spots: 16,
   },
   {
     day: "Mon",
@@ -13,6 +16,9 @@ export const classesData = [
     name: "Yoga",
     coach: "Sofia L.",
     level: "All levels",
+    description: "Midday flow to reset posture and breathe through the afternoon.",
+    duration: 60,
+    spots: 20,
   },
   {
     day: "Mon",
@@ -20,6 +26,9 @@ export const classesData = [
     name: "Strength",
     coach: "Alex K.",
     level: "Intermediate",
+    description: "Compound lifts and controlled tempo for solid evening gains.",
+    duration: 55,
+    spots: 12,
   },
   {
     day: "Tue",
@@ -27,6 +36,9 @@ export const classesData = [
     name: "Pilates",
     coach: "Nina P.",
     level: "All levels",
+    description: "Core-focused mat work — quiet strength and better control.",
+    duration: 50,
+    spots: 14,
   },
   {
     day: "Tue",
@@ -34,6 +46,9 @@ export const classesData = [
     name: "HIIT",
     coach: "Marta R.",
     level: "Advanced",
+    description: "Faster rounds and tougher finishers for experienced athletes.",
+    duration: 45,
+    spots: 14,
   },
   {
     day: "Tue",
@@ -41,6 +56,9 @@ export const classesData = [
     name: "Yoga",
     coach: "Sofia L.",
     level: "Beginner",
+    description: "Gentle evening practice — learn the basics without rush.",
+    duration: 60,
+    spots: 18,
   },
   {
     day: "Wed",
@@ -48,6 +66,9 @@ export const classesData = [
     name: "Strength",
     coach: "Alex K.",
     level: "Intermediate",
+    description: "Morning barbell session with coaching on form.",
+    duration: 55,
+    spots: 12,
   },
   {
     day: "Wed",
@@ -55,6 +76,9 @@ export const classesData = [
     name: "HIIT",
     coach: "Marta R.",
     level: "All levels",
+    description: "Lunch-break burn — scalable for every fitness level.",
+    duration: 40,
+    spots: 16,
   },
   {
     day: "Wed",
@@ -62,6 +86,9 @@ export const classesData = [
     name: "Pilates",
     coach: "Nina P.",
     level: "Intermediate",
+    description: "Deeper core sequences and stability work.",
+    duration: 50,
+    spots: 14,
   },
   {
     day: "Thu",
@@ -69,6 +96,9 @@ export const classesData = [
     name: "Yoga",
     coach: "Sofia L.",
     level: "All levels",
+    description: "Slow morning flow to open hips and settle the mind.",
+    duration: 60,
+    spots: 20,
   },
   {
     day: "Thu",
@@ -76,6 +106,9 @@ export const classesData = [
     name: "Strength",
     coach: "Alex K.",
     level: "Advanced",
+    description: "Heavier loads and progressive overload under close coaching.",
+    duration: 60,
+    spots: 10,
   },
   {
     day: "Fri",
@@ -83,6 +116,9 @@ export const classesData = [
     name: "HIIT",
     coach: "Marta R.",
     level: "Intermediate",
+    description: "Friday fire — finish the week strong before the weekend.",
+    duration: 45,
+    spots: 16,
   },
   {
     day: "Fri",
@@ -90,6 +126,9 @@ export const classesData = [
     name: "Pilates",
     coach: "Nina P.",
     level: "All levels",
+    description: "Reset your core and posture before the weekend starts.",
+    duration: 45,
+    spots: 14,
   },
   {
     day: "Fri",
@@ -97,6 +136,9 @@ export const classesData = [
     name: "Yoga",
     coach: "Sofia L.",
     level: "Intermediate",
+    description: "Dynamic flow with longer holds and intentional breathwork.",
+    duration: 60,
+    spots: 18,
   },
   {
     day: "Sat",
@@ -104,6 +146,9 @@ export const classesData = [
     name: "Strength",
     coach: "Alex K.",
     level: "All levels",
+    description: "Weekend fundamentals — build strength at your own pace.",
+    duration: 55,
+    spots: 14,
   },
   {
     day: "Sat",
@@ -111,5 +156,8 @@ export const classesData = [
     name: "HIIT",
     coach: "Marta R.",
     level: "Intermediate",
+    description: "Saturday sweat session — high energy, clear coaching cues.",
+    duration: 45,
+    spots: 16,
   },
 ];
