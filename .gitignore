@@ -8,3 +8,4 @@ Desktop.ini
 # Dependencies / build
 node_modules/
 dist/
+.env
