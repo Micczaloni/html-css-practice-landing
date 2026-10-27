@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { trainers } from "../data/trainers";
 import SpotStepper from "./SpotStepper";
 import { startCheckout } from "../lib/checkout";
@@ -13,6 +13,7 @@ export default function ClassDetail() {
   const [spots, setSpots] = useState(1);
   const [checkoutBusy, setCheckoutBusy] = useState(false);
   const [checkoutError, setCheckoutError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadClass() {
@@ -52,7 +53,8 @@ export default function ClassDetail() {
     try {
       await startCheckout(classItem.id, spots);
     } catch (error) {
-      setCheckoutError(error.message);
+      if (error.message.includes("signed in")) navigate("/login");
+      else setCheckoutError(error.message);
     } finally {
       setCheckoutBusy(false);
     }

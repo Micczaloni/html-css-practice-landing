@@ -11,7 +11,7 @@ const stripe = process.env.STRIPE_SECRET_KEY
   ? new Stripe(process.env.STRIPE_SECRET_KEY)
   : null;
 
-// POST /api/checkout — prices come from the database, never from the browser.
+// POST /api/stripe/checkout — prices come from the database, never from the browser.
 router.post("/checkout", requireAuth, async (req, res, next) => {
   try {
     if (!stripe) {
