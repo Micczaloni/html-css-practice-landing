@@ -7,6 +7,7 @@ import cors from "cors";
 import { toNodeHandler } from "better-auth/node";
 import { auth } from "./auth.js";
 import classesRouter from "./routes/classes.js";
+import stripeRouter from "./routes/stripe.js";
 
 const app = express();
 const PORT = Number(process.env.PORT ?? 3000);
@@ -21,8 +22,11 @@ app.use(
 
 // better-auth needs the raw body — mount BEFORE express.json()
 app.all("/api/auth/*splat", toNodeHandler(auth));
+// Webhooks must receive the untouched request bytes for signature verification.
+app.use("/api/stripe/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 app.use("/api/classes", classesRouter);
+app.use("/api/stripe", stripeRouter);
 
 // tiny ping so we can check the deploy is alive
 app.get("/api/health", (_req, res) => {
