@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { trainers } from "../data/trainers";
-import SpotStepper from "./SpotStepper";
-import { startCheckout } from "../lib/checkout";
 
 // Single class page — same idea as BrewHaus product detail, but we use numeric id
 export default function ClassDetail() {
@@ -10,10 +8,6 @@ export default function ClassDetail() {
   const [classItem, setClassItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [spots, setSpots] = useState(1);
-  const [checkoutBusy, setCheckoutBusy] = useState(false);
-  const [checkoutError, setCheckoutError] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadClass() {
@@ -30,7 +24,6 @@ export default function ClassDetail() {
         if (!response.ok) throw new Error("Failed to load class");
         const data = await response.json();
         setClassItem(data);
-        setSpots(1);
       } catch (err) {
         console.error(err);
         setError("Something went wrong loading this class.");
@@ -46,19 +39,6 @@ export default function ClassDetail() {
   const coach = classItem
     ? trainers.find((t) => t.name === classItem.coach)
     : null;
-
-  async function handleCheckout() {
-    setCheckoutBusy(true);
-    setCheckoutError(null);
-    try {
-      await startCheckout(classItem.id, spots);
-    } catch (error) {
-      if (error.message.includes("signed in")) navigate("/login");
-      else setCheckoutError(error.message);
-    } finally {
-      setCheckoutBusy(false);
-    }
-  }
 
   if (loading) {
     return (
@@ -124,10 +104,6 @@ export default function ClassDetail() {
           <dt className="font-semibold text-gray-500">Level</dt>
           <dd className="font-medium">{classItem.level}</dd>
         </div>
-        <div>
-          <dt className="font-semibold text-gray-500">Price</dt>
-          <dd className="font-medium">{(classItem.priceCents / 100).toFixed(2)} €</dd>
-        </div>
       </dl>
 
       <p className="mt-6 text-[1.05rem] leading-relaxed text-gray-700">
@@ -143,21 +119,13 @@ export default function ClassDetail() {
       )}
 
       <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
-        <SpotStepper
-          value={spots}
-          onChange={setSpots}
-          max={classItem.spots}
-        />
-        <button
-          type="button"
-          onClick={handleCheckout}
-          disabled={checkoutBusy}
+        <Link
+          to="/#prices"
           className="inline-flex items-center justify-center rounded-full bg-[#c6d947] px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-[#b5c73a]"
         >
-          {checkoutBusy ? "Opening…" : `Book ${spots}`}
-        </button>
+          View membership plans
+        </Link>
       </div>
-      {checkoutError && <p role="alert" className="mt-3 text-sm text-red-700">{checkoutError}</p>}
     </article>
   );
 }

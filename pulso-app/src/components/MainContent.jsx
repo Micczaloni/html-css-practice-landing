@@ -3,9 +3,7 @@ import { Link, useNavigate } from "react-router";
 
 import { DAYS } from "../data/classes";
 import { trainers } from "../data/trainers";
-import { memberships } from "../data/memberships";
 
-import SpotStepper from "./SpotStepper";
 import { startCheckout } from "../lib/checkout";
 
 export default function MainContent() {
@@ -14,11 +12,8 @@ export default function MainContent() {
 
   // classes from Neon via Express (same idea as BrewHaus Shop + /api/products)
   const [classes, setClasses] = useState([]);
+  const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // how many spots per class id, e.g. { 1: 2, 3: 1 }
-  // SpotStepper is controlled: values live here, not inside the stepper
-  const [spotsByClass, setSpotsByClass] = useState({});
 
   // demo contact form — no backend, just a thank-you message
   const [contactSent, setContactSent] = useState(false);
@@ -26,11 +21,11 @@ export default function MainContent() {
   const [checkoutError, setCheckoutError] = useState(null);
   const navigate = useNavigate();
 
-  async function handleCheckout(classId, quantity) {
-    setCheckoutId(classId);
+  async function handleCheckout(planId) {
+    setCheckoutId(planId);
     setCheckoutError(null);
     try {
-      await startCheckout(classId, quantity);
+      await startCheckout(planId);
     } catch (error) {
       if (error.message.includes("signed in")) navigate("/login");
       else setCheckoutError(error.message);
@@ -43,10 +38,15 @@ export default function MainContent() {
   useEffect(() => {
     async function loadClasses() {
       try {
-        const response = await fetch("/api/classes");
-        if (!response.ok) throw new Error("Failed to load classes");
-        const data = await response.json();
-        setClasses(data);
+        const [classesResponse, plansResponse] = await Promise.all([
+          fetch("/api/classes"),
+          fetch("/api/plans"),
+        ]);
+        if (!classesResponse.ok || !plansResponse.ok) {
+          throw new Error("Failed to load studio data");
+        }
+        setClasses(await classesResponse.json());
+        setPlans(await plansResponse.json());
       } catch (err) {
         console.error(err);
       } finally {
@@ -61,16 +61,6 @@ export default function MainContent() {
   const visibleClasses = classes.filter(
     (classItem) => classItem.day === selectedDay,
   );
-
-  // default to 1 if the user hasn't touched that class yet
-  const getSpots = (classId) => spotsByClass[classId] ?? 1;
-
-  const setSpots = (classId, nextValue) => {
-    setSpotsByClass((prev) => ({
-      ...prev,
-      [classId]: nextValue,
-    }));
-  };
 
   return (
     <div className="mx-auto w-full min-w-0 max-w-[920px] px-4">
@@ -184,9 +174,6 @@ export default function MainContent() {
                     <span className="text-[0.9rem] text-gray-500">
                       {classItem.duration} min · {classItem.spots} spots
                     </span>
-                    <span className="text-[0.9rem] font-semibold">
-                      {(classItem.priceCents / 100).toFixed(2)} €
-                    </span>
                   </div>
                   {classItem.description && (
                     <p className="mt-1.5 max-w-xl text-[0.8rem] text-gray-500">
@@ -203,19 +190,12 @@ export default function MainContent() {
 
                 {/* value + onChange = controlled pattern (same idea as QuantityStepper) */}
                 <div className="flex w-full flex-col items-stretch gap-3 sm:ml-auto sm:w-auto sm:flex-row sm:items-center">
-                  <SpotStepper
-                    value={getSpots(classItem.id)}
-                    onChange={(nextValue) => setSpots(classItem.id, nextValue)}
-                    max={classItem.spots}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleCheckout(classItem.id, getSpots(classItem.id))}
-                    disabled={checkoutId === classItem.id}
+                  <a
+                    href="#prices"
                     className="inline-flex w-full items-center justify-center rounded-full border-[1.5px] border-black px-3.5 py-1.5 text-sm font-medium transition hover:bg-black hover:text-white sm:w-auto"
                   >
-                    {checkoutId === classItem.id ? "Opening…" : `Book ${getSpots(classItem.id)}`}
-                  </button>
+                    View plans
+                  </a>
                 </div>
               </li>
             ))}
@@ -277,23 +257,25 @@ export default function MainContent() {
         </h2>
         {/* equal width cards: 1 col mobile, 3 from md */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:items-stretch">
-          {memberships.map((plan) => (
+          {plans.map((plan) => {
+            const popular = plan.name === "Pro";
+            return (
             <article
               key={plan.id}
               className={`relative flex w-full min-w-0 flex-col gap-2.5 rounded-[10px] bg-white p-5 pt-7 sm:p-6 ${
-                plan.popular
+                popular
                   ? "border-2 border-[#c6d947]"
                   : "border-[1.5px] border-[#d8d8d8]"
               }`}
             >
-              {plan.popular && (
+              {popular && (
                 <p className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#c6d947] px-2.5 py-0.5 text-xs font-bold whitespace-nowrap">
                   Most popular
                 </p>
               )}
               <h3 className="text-[1.05rem] font-bold">{plan.name}</h3>
               <p className="text-[1.65rem] font-bold tracking-tight">
-                {plan.price}&euro;
+                {(plan.priceCents / 100).toFixed(0)}&euro;
                 <span className="text-[0.95rem] font-medium text-gray-600">
                   /month
                 </span>
@@ -308,19 +290,27 @@ export default function MainContent() {
                   </li>
                 ))}
               </ul>
-              <a
-                href="#contact"
+              <button
+                type="button"
+                onClick={() => handleCheckout(plan.id)}
+                disabled={checkoutId === plan.id}
                 className={`mt-auto block rounded-full px-4 py-2.5 text-center text-sm font-semibold transition hover:-translate-y-px ${
-                  plan.popular
+                  popular
                     ? "bg-[#c6d947] text-black hover:bg-[#b5c73a]"
                     : "border-[1.5px] border-black bg-white text-black hover:bg-black hover:text-white"
                 }`}
               >
-                Choose {plan.name}
-              </a>
+                {checkoutId === plan.id ? "Opening…" : `Choose ${plan.name}`}
+              </button>
             </article>
-          ))}
+            );
+          })}
         </div>
+        {checkoutError && (
+          <p role="alert" className="mt-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+            {checkoutError}
+          </p>
+        )}
       </section>
 
       {/* --- Contact form (demo — no backend, thank-you message only) --- */}

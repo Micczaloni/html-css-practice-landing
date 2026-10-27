@@ -1,9 +1,9 @@
-export async function startCheckout(classId, quantity) {
+export async function startCheckout(planId, quantity = 1) {
   const response = await fetch("/api/stripe/checkout", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify({ classId, quantity }),
+    body: JSON.stringify({ planId, quantity }),
   });
 
   const data = await response.json();

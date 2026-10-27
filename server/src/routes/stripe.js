@@ -3,7 +3,7 @@ import Stripe from "stripe";
 import { eq, and } from "drizzle-orm";
 import { randomUUID } from "node:crypto";
 import { db } from "../db/index.js";
-import { classes, orders, orderItems } from "../db/schema.js";
+import { plans, orders, orderItems } from "../db/schema.js";
 import { requireAuth } from "../middleware/require-auth.js";
 
 const router = Router();
@@ -11,33 +11,30 @@ const stripe = process.env.STRIPE_SECRET_KEY
   ? new Stripe(process.env.STRIPE_SECRET_KEY)
   : null;
 
-// POST /api/stripe/checkout — prices come from the database, never from the browser.
+// POST /api/stripe/checkout — plan prices come from the database, never from the browser.
 router.post("/checkout", requireAuth, async (req, res, next) => {
   try {
     if (!stripe) {
       return res.status(503).json({ error: "Stripe is not configured yet." });
     }
 
-    const classId = Number(req.body.classId);
+    const planId = Number(req.body.planId);
     const quantity = Number(req.body.quantity ?? 1);
 
-    if (!Number.isInteger(classId) || !Number.isInteger(quantity) || quantity < 1) {
-      return res.status(400).json({ error: "Invalid class or quantity." });
+    if (!Number.isInteger(planId) || !Number.isInteger(quantity) || quantity < 1) {
+      return res.status(400).json({ error: "Invalid plan or quantity." });
     }
 
-    const [classItem] = await db
+    const [plan] = await db
       .select()
-      .from(classes)
-      .where(eq(classes.id, classId))
+      .from(plans)
+      .where(eq(plans.id, planId))
       .limit(1);
 
-    if (!classItem) return res.status(404).json({ error: "Class not found." });
-    if (quantity > classItem.spots) {
-      return res.status(400).json({ error: "That quantity is not available." });
-    }
+    if (!plan) return res.status(404).json({ error: "Plan not found." });
 
     const orderId = randomUUID();
-    const totalCents = classItem.priceCents * quantity;
+    const totalCents = plan.priceCents * quantity;
 
     await db.transaction(async (tx) => {
       await tx.insert(orders).values({
@@ -48,10 +45,10 @@ router.post("/checkout", requireAuth, async (req, res, next) => {
       });
       await tx.insert(orderItems).values({
         orderId,
-        classId: classItem.id,
-        className: classItem.name,
+        planId: plan.id,
+        planName: plan.name,
         quantity,
-        unitPriceCents: classItem.priceCents,
+        unitPriceCents: plan.priceCents,
       });
     });
 
@@ -62,8 +59,8 @@ router.post("/checkout", requireAuth, async (req, res, next) => {
         {
           price_data: {
             currency: "eur",
-            product_data: { name: `${classItem.name} class` },
-            unit_amount: classItem.priceCents,
+            product_data: { name: `${plan.name} membership` },
+            unit_amount: plan.priceCents,
           },
           quantity,
         },
@@ -71,7 +68,7 @@ router.post("/checkout", requireAuth, async (req, res, next) => {
       customer_email: req.user.email,
       metadata: { orderId },
       success_url: `${clientUrl}/success?order_id=${orderId}&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${clientUrl}/classes/${classItem.id}`,
+      cancel_url: `${clientUrl}/#prices`,
     });
 
     await db
