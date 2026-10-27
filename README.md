@@ -78,6 +78,48 @@ Now the rows come from Neon; that file only keeps the day tabs (`DAYS`).
 - Vercel builds `pulso-app/`. Point the `/api` rewrite in `vercel.json` at your Railway URL.
 - `BETTER_AUTH_URL` = Railway API URL. `CLIENT_URL` = Vercel site URL. Both need `https://`.
 
-## Not in scope
+## Stripe test payments (Assignment 4)
 
-No real payment, no admin panel, contact form is a front-end thank-you only.
+The booking button now creates a real Stripe Checkout Session in test mode.
+The server reads the class price from Neon, creates a `pending` order, and sends
+the browser to Stripe. Only the signed webhook can change that order to `paid`.
+
+### One-time setup
+
+1. Create a Stripe account and make sure the dashboard is in **Test mode**.
+2. Copy the **Secret key** from Developers → API keys into `server/.env`:
+
+```env
+STRIPE_SECRET_KEY="sk_test_..."
+STRIPE_WEBHOOK_SECRET="whsec_..."
+```
+
+3. Push the schema (already done for the current Neon database when developing locally):
+
+```bash
+cd server
+npm run db:push
+```
+
+4. Install and log in to the Stripe CLI, then run this while the API is running:
+
+```bash
+stripe login
+stripe listen --forward-to localhost:3000/api/stripe/webhook
+```
+
+Copy the `whsec_...` printed by `stripe listen` into `STRIPE_WEBHOOK_SECRET` and restart the API.
+
+### Test the complete flow
+
+Run the API and frontend in separate terminals. Create an account, sign in,
+click **Book**, and pay in Stripe Checkout with `4242 4242 4242 4242`, any
+future expiry date, and any CVC. Stripe CLI should show the webhook request;
+the success page then reads the order and displays `paid`.
+
+The important tables are:
+
+- `orders`: one row per purchase, linked to the authenticated `user`.
+- `order_items`: the class, quantity, and price snapshot bought in that order.
+
+`stripeSessionId` and `orderId` connect the Checkout Session to the database order.
