@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import { DAYS } from "../data/classes";
 import { trainers } from "../data/trainers";
 import { memberships } from "../data/memberships";
 
 import SpotStepper from "./SpotStepper";
+import { startCheckout } from "../lib/checkout";
 
 export default function MainContent() {
   // which day tab is selected — drives the filter below
@@ -21,6 +22,22 @@ export default function MainContent() {
 
   // demo contact form — no backend, just a thank-you message
   const [contactSent, setContactSent] = useState(false);
+  const [checkoutId, setCheckoutId] = useState(null);
+  const [checkoutError, setCheckoutError] = useState(null);
+  const navigate = useNavigate();
+
+  async function handleCheckout(classId, quantity) {
+    setCheckoutId(classId);
+    setCheckoutError(null);
+    try {
+      await startCheckout(classId, quantity);
+    } catch (error) {
+      if (error.message.includes("signed in")) navigate("/login");
+      else setCheckoutError(error.message);
+    } finally {
+      setCheckoutId(null);
+    }
+  }
 
   // load once on mount — empty [] so we don't refetch on every day-tab click
   useEffect(() => {
@@ -167,6 +184,9 @@ export default function MainContent() {
                     <span className="text-[0.9rem] text-gray-500">
                       {classItem.duration} min · {classItem.spots} spots
                     </span>
+                    <span className="text-[0.9rem] font-semibold">
+                      {(classItem.priceCents / 100).toFixed(2)} €
+                    </span>
                   </div>
                   {classItem.description && (
                     <p className="mt-1.5 max-w-xl text-[0.8rem] text-gray-500">
@@ -188,12 +208,14 @@ export default function MainContent() {
                     onChange={(nextValue) => setSpots(classItem.id, nextValue)}
                     max={classItem.spots}
                   />
-                  <a
-                    href="#contact"
+                  <button
+                    type="button"
+                    onClick={() => handleCheckout(classItem.id, getSpots(classItem.id))}
+                    disabled={checkoutId === classItem.id}
                     className="inline-flex w-full items-center justify-center rounded-full border-[1.5px] border-black px-3.5 py-1.5 text-sm font-medium transition hover:bg-black hover:text-white sm:w-auto"
                   >
-                    Book {getSpots(classItem.id)}
-                  </a>
+                    {checkoutId === classItem.id ? "Opening…" : `Book ${getSpots(classItem.id)}`}
+                  </button>
                 </div>
               </li>
             ))}
@@ -204,6 +226,11 @@ export default function MainContent() {
             </li>
           )}
         </ul>
+        {checkoutError && (
+          <p role="alert" className="mt-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+            {checkoutError}
+          </p>
+        )}
       </section>
 
       {/* --- Trainers (mapped from data/trainers.js) --- */}

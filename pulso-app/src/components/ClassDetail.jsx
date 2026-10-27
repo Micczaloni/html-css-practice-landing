@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { trainers } from "../data/trainers";
 import SpotStepper from "./SpotStepper";
+import { startCheckout } from "../lib/checkout";
 
 // Single class page — same idea as BrewHaus product detail, but we use numeric id
 export default function ClassDetail() {
@@ -10,6 +11,8 @@ export default function ClassDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [spots, setSpots] = useState(1);
+  const [checkoutBusy, setCheckoutBusy] = useState(false);
+  const [checkoutError, setCheckoutError] = useState(null);
 
   useEffect(() => {
     async function loadClass() {
@@ -42,6 +45,18 @@ export default function ClassDetail() {
   const coach = classItem
     ? trainers.find((t) => t.name === classItem.coach)
     : null;
+
+  async function handleCheckout() {
+    setCheckoutBusy(true);
+    setCheckoutError(null);
+    try {
+      await startCheckout(classItem.id, spots);
+    } catch (error) {
+      setCheckoutError(error.message);
+    } finally {
+      setCheckoutBusy(false);
+    }
+  }
 
   if (loading) {
     return (
@@ -107,6 +122,10 @@ export default function ClassDetail() {
           <dt className="font-semibold text-gray-500">Level</dt>
           <dd className="font-medium">{classItem.level}</dd>
         </div>
+        <div>
+          <dt className="font-semibold text-gray-500">Price</dt>
+          <dd className="font-medium">{(classItem.priceCents / 100).toFixed(2)} €</dd>
+        </div>
       </dl>
 
       <p className="mt-6 text-[1.05rem] leading-relaxed text-gray-700">
@@ -127,13 +146,16 @@ export default function ClassDetail() {
           onChange={setSpots}
           max={classItem.spots}
         />
-        <a
-          href="/#contact"
+        <button
+          type="button"
+          onClick={handleCheckout}
+          disabled={checkoutBusy}
           className="inline-flex items-center justify-center rounded-full bg-[#c6d947] px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-[#b5c73a]"
         >
-          Book {spots}
-        </a>
+          {checkoutBusy ? "Opening…" : `Book ${spots}`}
+        </button>
       </div>
+      {checkoutError && <p role="alert" className="mt-3 text-sm text-red-700">{checkoutError}</p>}
     </article>
   );
 }
