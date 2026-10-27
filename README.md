@@ -80,8 +80,8 @@ Now the rows come from Neon; that file only keeps the day tabs (`DAYS`).
 
 ## Stripe test payments (Assignment 4)
 
-The booking button now creates a real Stripe Checkout Session in test mode.
-The server reads the class price from Neon, creates a `pending` order, and sends
+The membership buttons now create a real Stripe Checkout Session in test mode.
+The server reads the plan price from Neon, creates a `pending` order, and sends
 the browser to Stripe. Only the signed webhook can change that order to `paid`.
 
 ### One-time setup
@@ -105,7 +105,7 @@ npm run db:push
 
 ```bash
 stripe login
-stripe listen --forward-to localhost:3000/api/stripe/webhook
+stripe listen --events checkout.session.completed --forward-to localhost:3000/api/stripe/webhook
 ```
 
 Copy the `whsec_...` printed by `stripe listen` into `STRIPE_WEBHOOK_SECRET` and restart the API.
@@ -113,13 +113,35 @@ Copy the `whsec_...` printed by `stripe listen` into `STRIPE_WEBHOOK_SECRET` and
 ### Test the complete flow
 
 Run the API and frontend in separate terminals. Create an account, sign in,
-click **Book**, and pay in Stripe Checkout with `4242 4242 4242 4242`, any
+choose a membership plan, and pay in Stripe Checkout with `4242 4242 4242 4242`, any
 future expiry date, and any CVC. Stripe CLI should show the webhook request;
 the success page then reads the order and displays `paid`.
 
 The important tables are:
 
 - `orders`: one row per purchase, linked to the authenticated `user`.
-- `order_items`: the class, quantity, and price snapshot bought in that order.
+- `order_items`: the plan, quantity, and price snapshot bought in that order.
 
 `stripeSessionId` and `orderId` connect the Checkout Session to the database order.
+
+### Production on Railway + Vercel
+
+Local `stripe listen` only forwards events to localhost. For production, add these
+variables to the Railway service running `server/`:
+
+```env
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+BETTER_AUTH_URL=https://html-css-practice-landing-production.up.railway.app
+CLIENT_URL=https://html-css-practice-landing.vercel.app
+```
+
+In Stripe Dashboard → Developers → Webhooks, create a test-mode endpoint:
+
+```text
+https://html-css-practice-landing-production.up.railway.app/api/stripe/webhook
+```
+
+Subscribe it to `checkout.session.completed` and copy its signing secret into
+Railway as `STRIPE_WEBHOOK_SECRET`. Vercel already rewrites `/api/*` to Railway;
+after deploying the latest commits, the same checkout flow works on the public URL.
