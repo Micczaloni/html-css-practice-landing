@@ -12,6 +12,83 @@ Live-ish setup (when deployed):
 Locally the frontend proxies `/api` to Express (see `pulso-app/vite.config.js`).  
 On Vercel the same idea is in `pulso-app/vercel.json` (rewrite `/api` → Railway).
 
+## Start here: work locally and verify the real deployment
+
+### Local development
+
+Use three PowerShell terminals from the project root.
+
+**Terminal 1 — API:**
+
+```powershell
+cd C:\Users\leagu\OneDrive\Desktop\mayrfield\server
+npm install
+npm run dev
+```
+
+The API runs at `http://localhost:3000`.
+
+**Terminal 2 — Stripe webhook listener:**
+
+```powershell
+cd C:\Users\leagu\OneDrive\Desktop\mayrfield
+stripe login
+stripe listen --events checkout.session.completed --forward-to localhost:3000/api/stripe/webhook
+```
+
+Copy the `whsec_...` printed by this command into `server/.env` as
+`STRIPE_WEBHOOK_SECRET`. Keep this terminal open while testing locally.
+
+**Terminal 3 — frontend:**
+
+```powershell
+cd C:\Users\leagu\OneDrive\Desktop\mayrfield\pulso-app
+npm install
+npm run dev
+```
+
+Open the URL printed by Vite, normally `http://localhost:5173`.
+
+The local test flow is: create an account → sign in → choose Basic, Pro or
+Premium → pay with `4242 4242 4242 4242` → use any future date and any CVC.
+
+### Work on the public domain
+
+The public application is:
+
+```text
+https://html-css-practice-landing.vercel.app/
+```
+
+You do not run the frontend or backend terminals for the public version. Push
+your changes to GitHub and let the connected services deploy them:
+
+```powershell
+cd C:\Users\leagu\OneDrive\Desktop\mayrfield
+git status
+git add -A
+git commit -m "describe the change"
+git push origin main
+```
+
+Then check **Deployments** in both Railway and Vercel. Railway deploys the
+Express API from `server/`; Vercel deploys the React frontend from
+`pulso-app/`. The deployed API should respond at:
+
+```text
+https://html-css-practice-landing-production.up.railway.app/api/health
+https://html-css-practice-landing-production.up.railway.app/api/plans
+```
+
+For production payments, Stripe Dashboard must send the webhook directly to:
+
+```text
+https://html-css-practice-landing-production.up.railway.app/api/stripe/webhook
+```
+
+Do not use the local `stripe listen` secret for the production Railway
+variable. The Dashboard webhook has its own signing secret.
+
 ## Folders
 
 | Path | What |
