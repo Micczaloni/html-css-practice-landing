@@ -9,7 +9,6 @@ export const classesData = [
     description: "Short intervals, high intensity — start the week with power.",
     duration: 45,
     spots: 16,
-    priceCents: 1500,
   },
   {
     day: "Mon",
@@ -20,7 +19,6 @@ export const classesData = [
     description: "Midday flow to reset posture and breathe through the afternoon.",
     duration: 60,
     spots: 20,
-    priceCents: 1500,
   },
   {
     day: "Mon",
@@ -31,7 +29,6 @@ export const classesData = [
     description: "Compound lifts and controlled tempo for solid evening gains.",
     duration: 55,
     spots: 12,
-    priceCents: 1800,
   },
   {
     day: "Tue",
@@ -42,7 +39,6 @@ export const classesData = [
     description: "Core-focused mat work — quiet strength and better control.",
     duration: 50,
     spots: 14,
-    priceCents: 1600,
   },
   {
     day: "Tue",
@@ -53,7 +49,6 @@ export const classesData = [
     description: "Faster rounds and tougher finishers for experienced athletes.",
     duration: 45,
     spots: 14,
-    priceCents: 1600,
   },
   {
     day: "Tue",
@@ -64,7 +59,6 @@ export const classesData = [
     description: "Gentle evening practice — learn the basics without rush.",
     duration: 60,
     spots: 18,
-    priceCents: 1500,
   },
   {
     day: "Wed",
@@ -75,7 +69,6 @@ export const classesData = [
     description: "Morning barbell session with coaching on form.",
     duration: 55,
     spots: 12,
-    priceCents: 1800,
   },
   {
     day: "Wed",
@@ -86,7 +79,6 @@ export const classesData = [
     description: "Lunch-break burn — scalable for every fitness level.",
     duration: 40,
     spots: 16,
-    priceCents: 1500,
   },
   {
     day: "Wed",
@@ -97,7 +89,6 @@ export const classesData = [
     description: "Deeper core sequences and stability work.",
     duration: 50,
     spots: 14,
-    priceCents: 1600,
   },
   {
     day: "Thu",
@@ -108,7 +99,6 @@ export const classesData = [
     description: "Slow morning flow to open hips and settle the mind.",
     duration: 60,
     spots: 20,
-    priceCents: 1500,
   },
   {
     day: "Thu",
@@ -119,7 +109,6 @@ export const classesData = [
     description: "Heavier loads and progressive overload under close coaching.",
     duration: 60,
     spots: 10,
-    priceCents: 1800,
   },
   {
     day: "Fri",
@@ -130,7 +119,6 @@ export const classesData = [
     description: "Friday fire — finish the week strong before the weekend.",
     duration: 45,
     spots: 16,
-    priceCents: 1500,
   },
   {
     day: "Fri",
@@ -141,7 +129,6 @@ export const classesData = [
     description: "Reset your core and posture before the weekend starts.",
     duration: 45,
     spots: 14,
-    priceCents: 1600,
   },
   {
     day: "Fri",
@@ -152,7 +139,6 @@ export const classesData = [
     description: "Dynamic flow with longer holds and intentional breathwork.",
     duration: 60,
     spots: 18,
-    priceCents: 1500,
   },
   {
     day: "Sat",
@@ -163,7 +149,6 @@ export const classesData = [
     description: "Weekend fundamentals — build strength at your own pace.",
     duration: 55,
     spots: 14,
-    priceCents: 1800,
   },
   {
     day: "Sat",
@@ -174,6 +159,5 @@ export const classesData = [
     description: "Saturday sweat session — high energy, clear coaching cues.",
     duration: 45,
     spots: 16,
-    priceCents: 1500,
   },
 ];

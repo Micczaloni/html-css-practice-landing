@@ -7,6 +7,7 @@ import cors from "cors";
 import { toNodeHandler } from "better-auth/node";
 import { auth } from "./auth.js";
 import classesRouter from "./routes/classes.js";
+import plansRouter from "./routes/plans.js";
 import stripeRouter from "./routes/stripe.js";
 
 const app = express();
@@ -26,6 +27,7 @@ app.all("/api/auth/*splat", toNodeHandler(auth));
 app.use("/api/stripe/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 app.use("/api/classes", classesRouter);
+app.use("/api/plans", plansRouter);
 app.use("/api/stripe", stripeRouter);
 
 // tiny ping so we can check the deploy is alive

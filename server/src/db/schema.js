@@ -71,7 +71,16 @@ export const classes = pgTable("classes", {
   description: text("description").notNull(),
   duration: integer("duration").notNull(), // minutes
   spots: integer("spots").notNull(), // capacity of the room
-  priceCents: integer("price_cents").notNull().default(1500), // price in EUR cents
+  // Kept for backwards compatibility with the first local checkout test.
+  // New purchases use plans.priceCents instead.
+  priceCents: integer("price_cents").notNull().default(1500),
+});
+
+export const plans = pgTable("plans", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull().unique(),
+  priceCents: integer("price_cents").notNull(),
+  features: text("features").array().notNull(),
 });
 
 export const orders = pgTable("orders", {
@@ -91,10 +100,12 @@ export const orderItems = pgTable("order_items", {
   orderId: text("order_id")
     .notNull()
     .references(() => orders.id, { onDelete: "cascade" }),
-  classId: integer("class_id")
-    .notNull()
-    .references(() => classes.id),
-  className: text("class_name").notNull(), // snapshot for the receipt/history
+  planId: integer("plan_id")
+    .references(() => plans.id),
+  planName: text("plan_name"), // snapshot for the receipt/history
+  // Legacy class purchase fields retained so old test orders remain readable.
+  classId: integer("class_id").references(() => classes.id),
+  className: text("class_name"),
   quantity: integer("quantity").notNull(),
   unitPriceCents: integer("unit_price_cents").notNull(),
 });
